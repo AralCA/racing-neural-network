@@ -76,12 +76,15 @@ public class CharacterDemo : MonoBehaviour
         RaycastHit hit2;
         if (Physics.Raycast(rayForw, out hit)) {
             neuralNetwork.GetLayers().ElementAt(0).GetNodeByIndex(0).SetCurrentInput(Math.Clamp(hit.distance/50,-1,1));
+            Debug.Log("Straight Raycast ("+ hit.distance+ ") to input: " + Math.Clamp(hit.distance/50,-1,1));
         }
         if (Physics.Raycast(rayRight, out hit1)) {
             neuralNetwork.GetLayers().ElementAt(0).GetNodeByIndex(1).SetCurrentInput(Math.Clamp(hit1.distance/50,-1,1));
+            Debug.Log("Right Raycast ("+ hit1.distance+ ") to input: " + Math.Clamp(hit1.distance/50,-1,1));
         }
         if (Physics.Raycast(rayLeft, out hit2)) {
             neuralNetwork.GetLayers().ElementAt(0).GetNodeByIndex(2).SetCurrentInput(Math.Clamp(hit2.distance/50,-1,1));
+            Debug.Log("Left Raycast ("+ hit2.distance+ ") to input: " + Math.Clamp(hit2.distance/50,-1,1));
         }
 
 
