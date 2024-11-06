@@ -2,7 +2,7 @@ public class NeuralConnection
 {
     private NeuralNode n1;
     private NeuralNode n2;
-    private byte weight;
+    private float weight;
 
     public NeuralNode N1
     {
@@ -16,13 +16,13 @@ public class NeuralConnection
         set { n2 = value; }
     }
 
-    public byte Weight
+    public float Weight
     {
         get { return weight; }
         set { weight = value; }
     }
 
-    public NeuralConnection(NeuralNode n1, NeuralNode n2, byte weight){
+    public NeuralConnection(NeuralNode n1, NeuralNode n2, float weight){
         this.n1 = n1;
         this.n2 = n2;
         this.weight = weight;
