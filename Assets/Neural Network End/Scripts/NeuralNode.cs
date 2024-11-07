@@ -47,7 +47,7 @@ public class NeuralNode
     }
 
     public void SetBias(float bias){
-        this.bias = bias;
+        this.bias = Mathf.Clamp(bias,-1,1);
     }
 
     public void SetConnections(HashSet<NeuralConnection> neuralConnections){

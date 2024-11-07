@@ -7,9 +7,15 @@ public class ConnectionTest : MonoBehaviour
     private LineRenderer _lineRenderer;
     private NeuralConnection connection;
 
+    private float lastWeight;
+
     private void Start() {
         Color c =_lineRenderer.material.color;
         c.a = Mathf.Abs(connection.Weight);
+        lastWeight = connection.Weight;
+        c.r = Mathf.Clamp(-lastWeight,0,1);
+        c.b = Mathf.Clamp(lastWeight,0,1);
+        c.g = 0;
         _lineRenderer.material.color = c;
     }
 
@@ -25,11 +31,19 @@ public class ConnectionTest : MonoBehaviour
 
     private void Update() {
         _lineRenderer.enabled = connection.N1.GetCurrentInput()>0;
+
+        if(lastWeight!=connection.Weight){
+            ResetWeightDisplay();
+            lastWeight = connection.Weight;
+        }
     }
 
     private void ResetWeightDisplay(){
         Color c =_lineRenderer.material.color;
         c.a = Mathf.Abs(connection.Weight);
+        c.r = Mathf.Clamp(-lastWeight,0,1);
+        c.b = Mathf.Clamp(lastWeight,0,1);
+        c.g = 0;
         _lineRenderer.material.color = c;
     }
 

@@ -68,7 +68,7 @@ public class NeuralNetwork{
         foreach(NeuralLayer layer in layers){
             foreach(NeuralNode node in layer.GetNodes()){
                 foreach(NeuralConnection neuralConnection in node.GetBackConnections())
-                    node.AddToCurrentInput(ReLU(neuralConnection.N1.GetCurrentInput()*neuralConnection.Weight-node.GetBias()));   
+                    node.AddToCurrentInput(sigmoid(neuralConnection.N1.GetCurrentInput()*neuralConnection.Weight-node.GetBias()));   
             }
         }
     }
@@ -82,11 +82,10 @@ public class NeuralNetwork{
     }
 
     public static float sigmoid(float x){
-        return 1/(Mathf.Exp(-x)+1);
+        return 1/Mathf.Exp(-x+1);
     }
 
     public static float ReLU(float x){
-        return x;
         return Math.Max(0,x);
     }
 

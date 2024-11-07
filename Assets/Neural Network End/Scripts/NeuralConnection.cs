@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class NeuralConnection
 {
     private NeuralNode n1;
@@ -19,7 +21,7 @@ public class NeuralConnection
     public float Weight
     {
         get { return weight; }
-        set { weight = value; }
+        set { weight = Mathf.Clamp(value,-1,1); }
     }
 
     public NeuralConnection(NeuralNode n1, NeuralNode n2, float weight){

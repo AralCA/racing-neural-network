@@ -1413,13 +1413,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8553325c2490be4391c413e7f545101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logFinal: 
   speed: 50
   Wheels:
   - {fileID: 1698072445}
   - {fileID: 2012004642}
   - {fileID: 24206120}
   - {fileID: 139485601}
+  canvas: {fileID: 0}
+  neuronTestObject: {fileID: 5403367467683012602, guid: 1d1abdf880192de4a88ac101389c76c4, type: 3}
+  connectionTestObject: {fileID: 6058318615206682110, guid: b863dc6832a45ed4ca84a3b1d6a81321, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

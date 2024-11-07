@@ -24,9 +24,12 @@ public class NeuronTest : MonoBehaviour
             state = false;
         }
         string myText = "" +neuralNode.GetCurrentInput();
-        if(myText.Length>3)
-        myText = myText.Substring(0,3);
-        textUI.text = "" +myText;
+        if(myText.Length>4)
+        myText = myText.Substring(0,4);
+        string myText2 = neuralNode.GetBias().ToString();
+        if(myText2.Length>4)
+        myText2 = myText2.Substring(0,4);
+        textUI.text = "" +myText + "\n" + myText2;
     }
 
     public void SetNeuralNode(NeuralNode node){

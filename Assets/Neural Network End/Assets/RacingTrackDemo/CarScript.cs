@@ -6,11 +6,15 @@ using UnityEngine;
 public class CarScript : MonoBehaviour
 {
     private Rigidbody rigidbody;
-    public string logFinal;
+    private string logFinal;
     private int layerCount = 3;
     [SerializeField] private float speed;
     NeuralNetwork neuralNetwork;
     [SerializeField] List<GameObject> Wheels = new List<GameObject>();
+
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private GameObject neuronTestObject;
+    [SerializeField] private GameObject connectionTestObject;
     private List<WheelCollider> wheelColliders = new List<WheelCollider>();
 
     private void Start() {
@@ -106,9 +110,23 @@ public class CarScript : MonoBehaviour
             //collider.brakeTorque = Mathf.Clamp(Mathf.Abs(SteeringFinal)-20, 0, 30);
             if (collider.gameObject.name[0].Equals('F')){
                 collider.steerAngle = Mathf.Clamp(SteeringFinal,-30,30);
-                Debug.Log("I WORK");
             }
         }
+    }
+
+    private void DisplayNeuron(int layer, int queueID, NeuralNode node){
+        Vector3 neuronPosition = new Vector3(layer*2, queueID*1.2f, 0);
+
+        GameObject neuron = Instantiate(neuronTestObject, neuronPosition, Quaternion.identity, this.transform);
+        
+        neuron.GetComponent<NeuronTest>().SetNeuralNode(node);
+        if(node.GetConnections()==null) return;
+        
+        foreach(NeuralConnection neuralConnection in node.GetConnections()){
+            connectionTestObject = Instantiate(connectionTestObject, neuron.transform.position, Quaternion.identity, this.transform);
+            connectionTestObject.GetComponent<ConnectionTest>().setConnection(neuralConnection);
+        }
+        
     }
  
 }
