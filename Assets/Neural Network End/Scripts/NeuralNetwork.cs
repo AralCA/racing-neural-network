@@ -50,16 +50,25 @@ public class NeuralNetwork{
                 node.SetFire(false);
             }
         }
-
+        /*
         foreach(NeuralLayer layer in layers){
             foreach(NeuralNode node in layer.GetNodes()){
-                if(node.GetCurrentInput()>0) node.SetFire(true);
-                if(node.GetIsFired()&&node.GetConnections()!=null){
+                if(node.GetConnections()!=null){
                     foreach(NeuralConnection neuralConnection in node.GetConnections()){
                         NeuralNode targetNode = neuralConnection.N2;
                         targetNode.AddToCurrentInput(ReLU(node.GetOutput(neuralConnection.Weight)));
                     }
                 }
+            }
+        }
+        */
+
+        //updated
+
+        foreach(NeuralLayer layer in layers){
+            foreach(NeuralNode node in layer.GetNodes()){
+                foreach(NeuralConnection neuralConnection in node.GetBackConnections())
+                    node.AddToCurrentInput(ReLU(neuralConnection.N1.GetCurrentInput()*neuralConnection.Weight-node.GetBias()));   
             }
         }
     }
@@ -77,6 +86,7 @@ public class NeuralNetwork{
     }
 
     public static float ReLU(float x){
+        return x;
         return Math.Max(0,x);
     }
 

@@ -18,7 +18,7 @@ public class NeuralLayer
         this.layerSize = layerSize;
         nodes = new HashSet<NeuralNode>();
         for(int i = 0; i<layerSize; i++){
-            this.nodes.Add(new NeuralNode(this, network,i+1,UnityEngine.Random.Range(-1,1)));
+            this.nodes.Add(new NeuralNode(this, network,i+1,UnityEngine.Random.Range(-1.0f,1.0f)));
         }
     }
 
@@ -28,8 +28,10 @@ public class NeuralLayer
             HashSet<NeuralConnection> neuralConnections= new HashSet<NeuralConnection>();
 
             foreach(var nextNode in nextLayer.nodes){
-                float weight = UnityEngine.Random.Range(-1,1);
-                neuralConnections.Add(new NeuralConnection(node, nextNode, weight));
+                float weight = UnityEngine.Random.Range(-1.0f,1.0f);
+                NeuralConnection connection = new NeuralConnection(node, nextNode, weight);
+                neuralConnections.Add(connection);
+                nextNode.AddToBackConnections(connection);
             }
             node.SetConnections(neuralConnections);
             connectionMap.Add(node, neuralConnections);

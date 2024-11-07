@@ -43,11 +43,11 @@ public class CarScript : MonoBehaviour
 
      private void FixedUpdate() {
         Ray rayForw = new Ray(transform.position, transform.forward);
-        Ray rayRight = new Ray(transform.position, (transform.right+transform.forward).normalized);
-        Ray rayLeft = new Ray(transform.position, (-1*transform.right+transform.forward).normalized);
+        Ray rayRight = new Ray(transform.position, (transform.right+transform.forward*2).normalized);
+        Ray rayLeft = new Ray(transform.position, (-1*transform.right+transform.forward*2).normalized);
         Debug.DrawRay(transform.position, transform.forward*50, Color.green);
-        Debug.DrawRay(transform.position, (transform.right+transform.forward).normalized*50, Color.red);
-        Debug.DrawRay(transform.position, (-1*transform.right+transform.forward).normalized*50, Color.red);
+        Debug.DrawRay(transform.position, (transform.right+transform.forward*2).normalized*50, Color.red);
+        Debug.DrawRay(transform.position, (-1*transform.right+transform.forward*2).normalized*50, Color.red);
 
         RaycastHit hit;
         RaycastHit hit1;
@@ -101,10 +101,11 @@ public class CarScript : MonoBehaviour
 
         foreach(WheelCollider collider in wheelColliders){
             
-            collider.motorTorque = 100;
+            collider.motorTorque = 200;
             collider.brakeTorque = Mathf.Clamp((20-hitForward.distance)*Mathf.Clamp(rigidbody.velocity.magnitude-5,0,1000),0,100)/10;
+            //collider.brakeTorque = Mathf.Clamp(Mathf.Abs(SteeringFinal)-20, 0, 30);
             if (collider.gameObject.name[0].Equals('F')){
-                collider.steerAngle = SteeringFinal;
+                collider.steerAngle = Mathf.Clamp(SteeringFinal,-30,30);
                 Debug.Log("I WORK");
             }
         }

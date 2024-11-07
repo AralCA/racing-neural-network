@@ -11,7 +11,8 @@ public class NeuralNode
     private NeuralLayer layer;
     private NeuralNetwork network;
     private int queueID;
-    private HashSet<NeuralConnection> myConnections;
+    private HashSet<NeuralConnection> myConnections = new HashSet<NeuralConnection>();
+    private HashSet<NeuralConnection> backConnections = new HashSet<NeuralConnection>();
 
     public NeuralNode(NeuralLayer layer, NeuralNetwork network, int queueID, float bias)
     {
@@ -75,7 +76,7 @@ public class NeuralNode
 
     public void AddToCurrentInput(float toAdd){
         this.currentInput += toAdd;
-        Math.Clamp(currentInput,-1,1);
+        currentInput=Math.Clamp(currentInput,-1,1);
     }
 
     public NeuralNetwork GetNetwork(){
@@ -84,6 +85,14 @@ public class NeuralNode
 
     public float GetOutput(float weight){
         return currentInput*weight-bias;
+    }
+
+    public void AddToBackConnections(NeuralConnection connection){
+        backConnections.Add(connection);
+    }
+
+    public HashSet<NeuralConnection> GetBackConnections(){
+        return backConnections;
     }
 }
 

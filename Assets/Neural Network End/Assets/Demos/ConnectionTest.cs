@@ -7,6 +7,12 @@ public class ConnectionTest : MonoBehaviour
     private LineRenderer _lineRenderer;
     private NeuralConnection connection;
 
+    private void Start() {
+        Color c =_lineRenderer.material.color;
+        c.a = Mathf.Abs(connection.Weight);
+        _lineRenderer.material.color = c;
+    }
+
 
     public void setConnection(NeuralConnection connection){
         _lineRenderer = GetComponent<LineRenderer>();
@@ -18,8 +24,13 @@ public class ConnectionTest : MonoBehaviour
     }
 
     private void Update() {
-        _lineRenderer.enabled = connection.N1.GetIsFired();
+        _lineRenderer.enabled = connection.N1.GetCurrentInput()>0;
     }
 
+    private void ResetWeightDisplay(){
+        Color c =_lineRenderer.material.color;
+        c.a = Mathf.Abs(connection.Weight);
+        _lineRenderer.material.color = c;
+    }
 
 }
