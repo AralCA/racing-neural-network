@@ -12,10 +12,10 @@ public class Test : MonoBehaviour {
 
     private int currentIndex =0;
     private int currentCount =0;
-    private float learningRate = 0.1f;
+    private float learningRate = 0.01f;
     private float biasLearningRate = 0.001f;
-
     private bool learn = true;
+
     private NeuralNetwork testNetwork;
     private void Start() {
         Stopwatch stopwatch = new Stopwatch();
@@ -50,7 +50,7 @@ public class Test : MonoBehaviour {
         
     }
 
-    private void FixedUpdate() {
+    private void Update() {
 
             demo();
         /*
@@ -124,75 +124,96 @@ public class Test : MonoBehaviour {
         if(testNetwork==null) testNetwork =  new NeuralNetwork(1,3,2,1,1);
 
         
+        
         List<List<float>> inputs = new List<List<float>>();
         inputs.Add(new List<float>());
-        inputs.First().Add(0.5f);
-        inputs.First().Add(0.4f);
+        inputs.First().Add(1f);
+        inputs.First().Add(1f);
         
         inputs.Add(new List<float>());
-        inputs[1].Add(0.6f);
-        inputs[1].Add(0.2f);
+        inputs[1].Add(0f);
+        inputs[1].Add(1f);
+
+        inputs.Add(new List<float>());
+        inputs[2].Add(1f);
+        inputs[2].Add(0f);
+
+        inputs.Add(new List<float>());
+        inputs[3].Add(0f);
+        inputs[3].Add(0f);
 
 
         List<List<float>> outputs = new List<List<float>>();
         outputs.Add(new List<float>());
-        outputs.First().Add(0.9f);
+        outputs.First().Add(1f);
 
         outputs.Add(new List<float>());
-        outputs[1].Add(0.8f);
+        outputs[1].Add(0f);
 
-        int index = 0;
-        foreach(NeuralNode neuralNode in testNetwork.GetLayers().ElementAt(0).GetNodes()){
-            testNetwork.GetLayers().ElementAt(0).GetNodes().ElementAt(index).SetCurrentInput(inputs[currentIndex].ElementAt(index));
-            index++;
-        }
+        outputs.Add(new List<float>());
+        outputs[2].Add(0f);
 
-        testNetwork.Process();
+        outputs.Add(new List<float>());
+        outputs[3].Add(1f);
 
-        int Count = 0;
-        foreach(NeuralNode node in testNetwork.GetLayers().Last().GetNodes()){
-            float error = outputs[currentIndex][Count] - node.GetCurrentInput();
-            if(learn) BackPropagate(node, learningRate, error);
-            Count++;
-        }
-        currentCount++;
-        if(currentCount == 1000){
-            if(currentIndex==1){
-                if(learn) learn=false;
-                currentIndex--;
-            }
-            else{
-                currentIndex++;
+
+        for(int i = 0; i < inputs.Count; i++){
+            int index = 0;
+            foreach(NeuralNode neuralNode in testNetwork.GetLayers().ElementAt(0).GetNodes()){
+                testNetwork.GetLayers().ElementAt(0).GetNodes().ElementAt(index).SetCurrentInput(inputs[i].ElementAt(index));
+                index++;
             }
 
+            testNetwork.Process();
+
+            int Count = 0;
+            foreach(NeuralNode node in testNetwork.GetLayers().Last().GetNodes()){
+                float error = outputs[i][Count] - node.GetCurrentInput();
+                if(learn) BackPropagate(node, learningRate, error);
+                UnityEngine.Debug.Log("Input: " + i + " output: " + node.GetCurrentInput() + " target: " + outputs[i][Count]);
+                Count++;
+
+                if(error < 0.00001 && error > -0.00001){
+                    //learn = false;
+                }
+            }
+        }
+
+
+        if(currentCount == outputs.Count-1){
             currentCount = 0;
-        }
+        }else currentCount++;
 
-        
-
-            
     }
 
     public void BackPropagate(NeuralNode node, float learningRate, float error) {
         if(node == null){return;}
 
         float error_deriv = error*2;
-        float ReLU_Derivative = node.GetCurrentInput() > 0 ? 1 : 0;
         
-        float outputGradient = error_deriv * ReLU_Derivative;
+        
+        float outputGradient = error_deriv * NeuralNetwork.dReLU(node.GetCurrentInput());
+
+        float totalWeights = 0;
+        foreach (NeuralConnection neuralConnection in node.GetBackConnections()){
+            totalWeights += neuralConnection.Weight;
+        }
 
         foreach(NeuralConnection neuralConnection in node.GetBackConnections()){
             float deltaWeight = learningRate * outputGradient * neuralConnection.N1.GetCurrentInput();
 
             float deltaBias = biasLearningRate * outputGradient;
-            neuralConnection.Weight += deltaWeight;
+            neuralConnection.Weight += deltaWeight/totalWeights;
             node.SetBias(node.GetBias()-deltaBias);
 
             float newError = error * neuralConnection.Weight;
 
             BackPropagate(neuralConnection.N1,learningRate, newError);
         }
-        UnityEngine.Debug.Log(testNetwork.GetLayers().Last().GetNodes().Last().GetCurrentInput());
-        UnityEngine.Debug.Log("Output: " + testNetwork.GetLayers().Last().GetNodes().Last().GetCurrentInput() + " Error: " + error + " Error Deriv: " + error_deriv + " Grad: " + outputGradient + " ");
+        //UnityEngine.Debug.Log(testNetwork.GetLayers().Last().GetNodes().Last().GetCurrentInput());
+        //UnityEngine.Debug.Log("Output: " + testNetwork.GetLayers().Last().GetNodes().Last().GetCurrentInput() + " Error: " + error + " Error Deriv: " + error_deriv + " Grad: " + outputGradient + " ");
     }
+
+    
+
 }
