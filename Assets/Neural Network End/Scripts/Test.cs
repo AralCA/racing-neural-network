@@ -5,7 +5,7 @@ using Unity;
 using UnityEngine;
 
 public class Test : MonoBehaviour {
-    
+    //i literally wrote progation before    
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject neuronTestObject;
     [SerializeField] private GameObject connectionTestObject;
