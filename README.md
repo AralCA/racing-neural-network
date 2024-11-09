@@ -25,3 +25,19 @@ That made me feel like i could realize somehing myself.
 Since the racing AI market arent that big but may get me my dream job, I am going to continue on this AI with a MIT license.
 
 I'm hoping a commercial recognition if I continue; but honestly, i just love this.
+
+
+HOW DOES IT WORK?
+
+There are 4 main classes for the network, all made for the learning simplicity so dont expect any optimization.
+So that in C# I could not use the Python NumPy or any mathmetical libraries, the matrix functions are just object operations.
+And since the game runs on two update types it is not such a problem.
+Every object holds an ID except connections. You can get a node by it's ID.
+
+Neural Node: Holds the connection objects from back and forth, has an input variable.
+
+Neural Connection: Holds the two nodes and the connection weight. Symetrical.
+
+Neural Layer: Initializes the nodes and holds them.
+
+Neural Network: Holds everything, has the functions to train or tease. Initializes layers.
