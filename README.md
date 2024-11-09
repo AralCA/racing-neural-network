@@ -12,11 +12,11 @@ I had lots of issues with the learning algo altough it looks fairly simple.
 
 People made lot's of recognition scripts and i was not interested in the matter.
 
-I wanted to make an ai that could learn how to drive at first.
+I wanted to make an AI that could learn how to drive at first.
 
 Update 11/9/2024 I have achieved that yesterday.
 
-I started this project i think this thursday. And in about 4 days of work i learned a lot of things that actually made me even more interested at every bump.
+I started this project i think this tuesday. And in about 4 days of work i learned a lot of things that actually made me even more interested at every bump.
 
 The weird thing about this also is that whatever you search for is fairly recent or just haven't been touched since 80s.
 
