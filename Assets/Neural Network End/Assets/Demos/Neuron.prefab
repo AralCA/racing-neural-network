@@ -145,7 +145,6 @@ GameObject:
   - component: {fileID: 7182596563877691810}
   - component: {fileID: 4394732421802617776}
   - component: {fileID: 8818181272633914842}
-  - component: {fileID: 8767362394872095225}
   - component: {fileID: 5025592645125614734}
   m_Layer: 0
   m_Name: Neuron
@@ -220,27 +219,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8767362394872095225
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5403367467683012602}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5025592645125614734
 MonoBehaviour:
   m_ObjectHideFlags: 0

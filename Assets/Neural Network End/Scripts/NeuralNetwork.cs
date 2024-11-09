@@ -90,10 +90,12 @@ public class NeuralNetwork{
     }
 
     public static float ReLU(float x){
-        return Math.Max(x/10,x);
+        return x;
+        return Math.Max(0.01f,x);
     }
 
     public static float dReLU(float x){
+        return 1;
         return x > 0? 1 : 0;
     }
 
@@ -108,6 +110,34 @@ public class NeuralNetwork{
         }
 
         return clone;
+    }
+
+    public void BackPropagate(NeuralNode node, float learningRate,float biasLearningRate, float error) {
+        if(node == null){return;}
+
+        float error_deriv = error*2;
+        
+        
+        float outputGradient = error_deriv * NeuralNetwork.dReLU(node.GetCurrentInput());
+
+        float totalWeights = 0;
+        foreach (NeuralConnection neuralConnection in node.GetBackConnections()){
+            totalWeights += neuralConnection.Weight;
+        }
+
+        foreach(NeuralConnection neuralConnection in node.GetBackConnections()){
+            float deltaWeight = learningRate * outputGradient * neuralConnection.N1.GetCurrentInput();
+
+            float deltaBias = biasLearningRate * outputGradient;
+            neuralConnection.Weight += deltaWeight/totalWeights;
+            node.SetBias(node.GetBias()-deltaBias);
+
+            float newError = error * neuralConnection.Weight;
+
+            BackPropagate(neuralConnection.N1,learningRate, biasLearningRate, newError);
+        }
+        //UnityEngine.Debug.Log(testNetwork.GetLayers().Last().GetNodes().Last().GetCurrentInput());
+        //UnityEngine.Debug.Log("Output: " + testNetwork.GetLayers().Last().GetNodes().Last().GetCurrentInput() + " Error: " + error + " Error Deriv: " + error_deriv + " Grad: " + outputGradient + " ");
     }
 
 }

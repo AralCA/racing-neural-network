@@ -12,6 +12,7 @@ public class NeuronTest : MonoBehaviour
     NeuralNode neuralNode;
 
     private void Start() {
+        transform.position+=Vector3.up*10;
         GetComponent<Renderer>().material = greenMat;
     }
     private void LateUpdate() {
